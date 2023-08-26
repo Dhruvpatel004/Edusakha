@@ -74,3 +74,20 @@ let hideDisplayFrame = () => {
 }
 
 displayFrame.addEventListener('click', hideDisplayFrame)
+
+function terminateCall() {
+  // Send signaling message to other participants
+  messagingService.sendMessageToAll('call_terminated');
+
+  // Leave the channel and clean up
+  client.leave();
+  // Clean up UI and resources
+}
+
+messagingService.onMessage((message) => {
+  if (message === 'call_terminated') {
+    // Leave the channel and clean up
+    client.leave();
+    // Clean up UI and resources
+  }
+});
